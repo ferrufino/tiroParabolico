@@ -108,7 +108,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         URL xuURL = this.getClass().getResource("images/gOVER.png");
         gameover = Toolkit.getDefaultToolkit().getImage(xuURL);
 
-        URL bgURL = this.getClass().getResource("images/background.jpg");
+        URL bgURL = this.getClass().getResource("images/background3.jpg");
         background = Toolkit.getDefaultToolkit().getImage(bgURL);
 
         URL cHURL = this.getClass().getResource("images/boom.png");
