@@ -117,7 +117,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         //Inicializadores 
         addKeyListener(this);
         addMouseListener(this);
-        //addMouseMotionListener(this);
+        addMouseMotionListener(this);
         /**
          * 
          */
@@ -279,7 +279,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
      */
     public void paint1(Graphics g) {
         if (VIDAS > 0) {
-            if (fireBasket != null && listaIzq != null) {
+            if (fireBasket != null) {
 
                 g.drawImage(background, 0, 0, this);
 
