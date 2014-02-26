@@ -169,12 +169,12 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
             switch (teclaPresionada) {
                 case 1: {
 
-                    fireBasket.setPosX(fireBasket.getPosX() - 1);
+                    fireBasket.setPosX(fireBasket.getPosX() - 4);
                     break; //se mueve hacia la izquierda
                 }
                 case 2: {
 
-                    fireBasket.setPosX(fireBasket.getPosX() + 1);
+                    fireBasket.setPosX(fireBasket.getPosX() + 4);
                     break; //se mueve hacia la derecha
                 }
             }
