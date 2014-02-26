@@ -383,6 +383,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
 
             if (instrucciones) {
                 instrucciones = false;
+                pause=false;
             } else {
                 pause = true;
                 instrucciones = true;
