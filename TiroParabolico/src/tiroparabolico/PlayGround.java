@@ -60,8 +60,8 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
     private int xMenor;
     private int yMayor;
     private int yMenor;
-    private boolean PAUSE; //Permite al usuario pausar el juego
-    private boolean ACTION;
+    private boolean pause; //Permite al usuario pausar el juego
+    private boolean action;
     private long tiempoActual;
     private long tiempoInicial;
     private boolean BEGIN;
@@ -74,8 +74,8 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         setSize(1000, 700);
         crashed = false;
         BEGIN = true;
-        PAUSE = false;
-        ACTION = false;
+        pause = false;
+        action = false;
         timeRetard = 0;
         direccion = 0;
 
@@ -161,7 +161,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
     public void run() {
         tiempoActual = System.currentTimeMillis();
         while (VIDAS > 0) {
-            if (!PAUSE) {
+            if (!pause) {
                 Actualiza();
                 ChecaColision();
             }
@@ -213,7 +213,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
             basketBall.updateS(tiempoTranscurrido);
         }
 
-        if (ACTION) {
+        if (action) {
             switch (direccion) {
                 case 3: {
 
@@ -370,7 +370,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
 
                 g.drawImage(background, 0, 0, this);
 
-                if (PAUSE) {
+                if (pause) {
 
                     g.setFont(new Font("Avenir Black", Font.BOLD, 60));
                     g.setColor(Color.white);
@@ -427,10 +427,10 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
 
         if (e.getKeyCode() == KeyEvent.VK_P) {
 
-            PAUSE = !PAUSE;
+            pause = !pause;
 
         }
-        ACTION = true;
+        action = true;
 
     }
 
@@ -439,7 +439,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
 
     public void keyReleased(KeyEvent e) {
 
-        ACTION = false; //Presiono flecha arriba
+        action = false; //Presiono flecha arriba
 
     }
     /*
