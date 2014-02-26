@@ -362,13 +362,13 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
 
         }
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-
+            action = true;
             teclaPresionada = 1;
 
         }
 
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-
+            action = true;
             teclaPresionada = 2;
 
         }
@@ -392,7 +392,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         if (e.getKeyCode() == KeyEvent.VK_S) {
 
         }
-        action = true;
+        
 
     }
 
