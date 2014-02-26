@@ -96,10 +96,10 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         posY = 100;
  
         URL fbURL = this.getClass().getResource("images/fireBasket.gif");
-        fireBasket = new Bloque(posX, posY, Toolkit.getDefaultToolkit().getImage(fbURL));
+        fireBasket = new Bloque((getWidth()-150),(getHeight()-80), Toolkit.getDefaultToolkit().getImage(fbURL));
  
         URL bbURL = this.getClass().getResource("images/basketBall.gif");
-        basketBall = new Pelota(posX, posY, Toolkit.getDefaultToolkit().getImage(bbURL));
+        basketBall = new Pelota(50, 300, Toolkit.getDefaultToolkit().getImage(bbURL));
 
 
        
