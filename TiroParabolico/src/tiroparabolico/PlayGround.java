@@ -32,13 +32,13 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
     private Graphics dbg;	// Objeto grafico
     private SoundClip fail;    // Objeto AudioClip
     private SoundClip collide;    //Objeto AudioClip 
-    private Bueno gatoBueno;    // Objeto de la clase Elefante
-    private Malo perroMalo;   //Objeto de la clase Raton
+    private Bloque fireBasket;    // Objeto de la clase Elefante
+    private Pelota basketBall;   //Objeto de la clase Raton
    //listas
-    private LinkedList listaIzq;           //lista de perroMalos por la Izquierda
+    private LinkedList listaIzq;           //lista de basketBalls por la Izquierda
     private LinkedList listaDer;           //lista de perrosMalos por la derecha
     
-    private int cantidad;               //cantidadidad de perroMalos
+    private int cantidad;               //cantidadidad de basketBalls
     private int timeRetard;    //Contador para retrazar aparicion de DESAPARECE
     private boolean IconPressed;
     private int coordenada_x;
@@ -81,10 +81,10 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
 
         SCORE = 0;                    //puntaje inicial
         VIDAS = 1;                    //vida inicial
-        xMayor = (getWidth() - getWidth() / 10);           //posicion máxima en x que tendrán los perroMalos
-        xMenor = 0;           //posicion mínima en x que tendrán los perroMalos
-        yMayor = (getHeight() - (getHeight() / 10));          //posicion máxima en y que tendrán los perroMalos
-        yMenor = 10;        //posicion mínima en y que tendrán los perroMalos
+        xMayor = (getWidth() - getWidth() / 10);           //posicion máxima en x que tendrán los basketBalls
+        xMenor = 0;           //posicion mínima en x que tendrán los basketBalls
+        yMayor = (getHeight() - (getHeight() / 10));          //posicion máxima en y que tendrán los basketBalls
+        yMenor = 10;        //posicion mínima en y que tendrán los basketBalls
 
         //Se cargan los sonidos.
         URL beURL = this.getClass().getResource("sounds/fail-buzzer-03.wav");
@@ -98,13 +98,13 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         int[] array1 = new int[]{6, 10, 12};
         cantidad = array1[(int) Math.random() * 3];
         while (cantidad != 0) {
-            posX = (-10);     //se generarán los perroMalos en posiciones aleatorias fuera del applet
+            posX = (-10);     //se generarán los basketBalls en posiciones aleatorias fuera del applet
             posY = ((int) (Math.random() * (yMayor - yMenor))) + yMenor;
 
-            perroMalo = new Malo(posX, posY);
-            perroMalo.setPosX(posX);
-            perroMalo.setPosY(posY);
-            listaIzq.add(perroMalo);
+            basketBall = new Pelota(posX, posY);
+            basketBall.setPosX(posX);
+            basketBall.setPosY(posY);
+            listaIzq.add(basketBall);
             cantidad--;
         }
 
@@ -114,19 +114,19 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         int[] array2 = new int[]{6, 10, 12};
         cantidad = array2[(int) Math.random() * 3];
         while (cantidad != 0) {
-            posX = (1100);     //se generarán los perroMalos en posiciones aleatorias fuera del applet
+            posX = (1100);     //se generarán los basketBalls en posiciones aleatorias fuera del applet
             posY = ((int) (Math.random() * (yMayor - yMenor))) + yMenor;
 
-            perroMalo = new Malo(posX, posY);
-            perroMalo.setPosX(posX);
-            perroMalo.setPosY(posY);
-            listaDer.add(perroMalo);
+            basketBall = new Pelota(posX, posY);
+            basketBall.setPosX(posX);
+            basketBall.setPosY(posY);
+            listaDer.add(basketBall);
             cantidad--;
         }
-        int posX = (getWidth() / 2) - 50;              // posicion inicial del gatoBueno en x
-        int posY = getHeight();             // posicion inicial del gatoBueno en y
+        int posX = (getWidth() / 2) - 50;              // posicion inicial del fireBasket en x
+        int posY = getHeight();             // posicion inicial del fireBasket en y
 
-        gatoBueno = new Bueno(posX, posY);
+        fireBasket = new Bloque(posX, posY);
 
         URL xuURL = this.getClass().getResource("images/gOVER.png");
         gameover = Toolkit.getDefaultToolkit().getImage(xuURL);
@@ -176,7 +176,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
     }
 
     /**
-     * Metodo usado para Actualizar la posicion de objetos elefante y perroMalo.
+     * Metodo usado para Actualizar la posicion de objetos elefante y basketBall.
      *
      */
     public void Actualiza() {
@@ -184,22 +184,22 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         switch (CUADRANTE) {
             case 3: {
 
-                gatoBueno.setPosY(gatoBueno.getPosY() + gatoBueno.getSpeed());
+                fireBasket.setPosY(fireBasket.getPosY() + fireBasket.getSpeed());
                 break; //se mueve hacia arriba
             }
             case 2: {
 
-                gatoBueno.setPosX(gatoBueno.getPosX() + gatoBueno.getSpeed());
+                fireBasket.setPosX(fireBasket.getPosX() + fireBasket.getSpeed());
                 break; //se mueve hacia la derecha
             }
             case 1: {
 
-                gatoBueno.setPosY(gatoBueno.getPosY() - gatoBueno.getSpeed());
+                fireBasket.setPosY(fireBasket.getPosY() - fireBasket.getSpeed());
                 break; //se mueve hacia abajo
             }
             case 4: {
 
-                gatoBueno.setPosX(gatoBueno.getPosX() - gatoBueno.getSpeed());
+                fireBasket.setPosX(fireBasket.getPosX() - fireBasket.getSpeed());
                 break; //se mueve hacia la izquierda
             }
         }
@@ -207,45 +207,45 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         //Actualiza la animacion creada de los objetos
         long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
         tiempoActual += tiempoTranscurrido;
-        gatoBueno.updateS(tiempoTranscurrido);
+        fireBasket.updateS(tiempoTranscurrido);
         for (int i = 0; i < listaIzq.size(); i++) {
-            Malo perroMalo = (Malo) listaIzq.get(i);
-            perroMalo.updateS(tiempoTranscurrido);
+            Pelota basketBall = (Pelota) listaIzq.get(i);
+            basketBall.updateS(tiempoTranscurrido);
         }
 
         if (ACTION) {
             switch (direccion) {
                 case 3: {
 
-                    gatoBueno.setPosX(gatoBueno.getPosX() - 1);
+                    fireBasket.setPosX(fireBasket.getPosX() - 1);
                     break; //se mueve hacia la izquierda
                 }
                 case 4: {
 
-                    gatoBueno.setPosX(gatoBueno.getPosX() + 1);
+                    fireBasket.setPosX(fireBasket.getPosX() + 1);
                     break; //se mueve hacia la derecha
                 }
             }
         }
 
         if (IconPressed) {
-            gatoBueno.setPosY(coordenada_y - off_y);
-            gatoBueno.setPosX(coordenada_x - off_x);
+            fireBasket.setPosY(coordenada_y - off_y);
+            fireBasket.setPosX(coordenada_x - off_x);
 
         }
-        //lista de Malos que se mueven de izq a derecha 
+        //lista de Pelotas que se mueven de izq a derecha 
         for (int i = 0; i < listaIzq.size(); i++) {
-            Malo perroMalo = (Malo) listaIzq.get(i);
-            if (perroMalo.getPosY() < getHeight()) {
-                perroMalo.setPosX(perroMalo.getPosX() + perroMalo.getSpeed());       
+            Pelota basketBall = (Pelota) listaIzq.get(i);
+            if (basketBall.getPosY() < getHeight()) {
+                basketBall.setPosX(basketBall.getPosX() + basketBall.getSpeed());       
             }
 
         }
-        //lista de Malos que se mueven de der a izq
+        //lista de Pelotas que se mueven de der a izq
         for (int i = 0; i < listaDer.size(); i++) {
-            Malo perroMalo = (Malo) listaDer.get(i);
-            if (perroMalo.getPosY() < getHeight()) {
-                perroMalo.setPosX(perroMalo.getPosX() - perroMalo.getSpeed());       
+            Pelota perroPelota = (Pelota) listaDer.get(i);
+            if (basketBall.getPosY() < getHeight()) {
+                basketBall.setPosX(basketBall.getPosX() - basketBall.getSpeed());       
             }
 
         }
@@ -253,44 +253,44 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
     }
 
     /**
-     * Metodo usado para checar las colisiones del objeto elefante y perroMalo
+     * Metodo usado para checar las colisiones del objeto elefante y basketBall
      * con las orillas del <code>Applet</code>.
      */
     public void ChecaColision() {
 
         //checa colision con el applet
-        if (gatoBueno.getPosY() < 0) {              //choca borde de arriba
-            gatoBueno.setPosY(0);
+        if (fireBasket.getPosY() < 0) {              //choca borde de arriba
+            fireBasket.setPosY(0);
         }
 
-        if (gatoBueno.getPosY() + gatoBueno.getAlto() > getHeight()) {       //si se pasa del borde de abajo
-            gatoBueno.setPosY(getHeight() - gatoBueno.getAlto());
+        if (fireBasket.getPosY() + fireBasket.getAlto() > getHeight()) {       //si se pasa del borde de abajo
+            fireBasket.setPosY(getHeight() - fireBasket.getAlto());
         }
 
-        if (gatoBueno.getPosX() < 0) {                             //si se pasa del borde de la izquierda
-            gatoBueno.setPosX(0);
+        if (fireBasket.getPosX() < 0) {                             //si se pasa del borde de la izquierda
+            fireBasket.setPosX(0);
         }
 
-        if (gatoBueno.getPosX() + gatoBueno.getAncho() > getWidth()) {      //si se pasa del borde de la derecha
-            gatoBueno.setPosX(getWidth() - gatoBueno.getAncho());
+        if (fireBasket.getPosX() + fireBasket.getAncho() > getWidth()) {      //si se pasa del borde de la derecha
+            fireBasket.setPosX(getWidth() - fireBasket.getAncho());
         }
         //Listas encadenada de malos de Izq a Derecha
         for (int i = 0; i < listaIzq.size(); i++) {
-            Malo perroMalo = (Malo) listaIzq.get(i);
-            if (perroMalo.getPosX() + perroMalo.getAncho() > getWidth()) {    //perroMalo colisiona a la derecha del applet
+            Pelota basketBall = (Pelota) listaIzq.get(i);
+            if (basketBall.getPosX() + basketBall.getAncho() > getWidth()) {    //basketBall colisiona a la derecha del applet
                 fail.play();
-                perroMalo.setPosX(-10);                                           //se reposiciona en su posicion inicial
-                perroMalo.setPosY(((int) (Math.random() * (yMayor - yMenor))) + yMenor);
+                basketBall.setPosX(-10);                                           //se reposiciona en su posicion inicial
+                basketBall.setPosY(((int) (Math.random() * (yMayor - yMenor))) + yMenor);
             }
 
         }
         //Listas encadenada de malos de Derecha a Izq
         for (int i = 0; i < listaDer.size(); i++) {
-            Malo perroMalo = (Malo) listaDer.get(i);
-            if (perroMalo.getPosX() + perroMalo.getAncho() < 0) {    //perroMalo colisiona a la derecha del applet
+            Pelota basketBall = (Pelota) listaDer.get(i);
+            if (basketBall.getPosX() + basketBall.getAncho() < 0) {    //basketBall colisiona a la derecha del applet
                 fail.play();
-                perroMalo.setPosX(1100);                                           //se reposiciona en su posicion inicial
-                perroMalo.setPosY(((int) (Math.random() * (yMayor - yMenor))) + yMenor);
+                basketBall.setPosX(1100);                                           //se reposiciona en su posicion inicial
+                basketBall.setPosY(((int) (Math.random() * (yMayor - yMenor))) + yMenor);
             }
 
         }
@@ -298,32 +298,32 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         //Colision entre objetos
         //Lista Izq
         for (int i = 0; i < listaIzq.size(); i++) {
-            Malo perroMalo = (Malo) listaIzq.get(i);
+            Pelota basketBall = (Pelota) listaIzq.get(i);
 
-            if (gatoBueno.intersecta(perroMalo)) {
+            if (fireBasket.intersecta(basketBall)) {
                 //&&dragged up
                 crashed = true;
                 collide.play();
                 SCORE += 100;
-                perroMalo.setConteo(perroMalo.getConteo() + 1);
-                perroMalo.setPosX(-10);     // se reposiciona el perroMalo
-                perroMalo.setPosY(((int) (Math.random() * (yMayor - yMenor))) + yMenor);
+                basketBall.setConteo(basketBall.getConteo() + 1);
+                basketBall.setPosX(-10);     // se reposiciona el basketBall
+                basketBall.setPosY(((int) (Math.random() * (yMayor - yMenor))) + yMenor);
 
             }
 
         }
         //Lista Der
         for (int i = 0; i < listaDer.size(); i++) {
-            Malo perroMalo = (Malo) listaDer.get(i);
+            Pelota basketBall = (Pelota) listaDer.get(i);
 
-            if (gatoBueno.intersecta(perroMalo)) {
+            if (fireBasket.intersecta(basketBall)) {
 
                 crashed = true;
                 collide.play();
                 SCORE += 100;
-                perroMalo.setConteo(perroMalo.getConteo() + 1);
-                perroMalo.setPosX(1100);     // se reposiciona el perroMalo
-                perroMalo.setPosY(((int) (Math.random() * (yMayor - yMenor))) + yMenor);
+                basketBall.setConteo(basketBall.getConteo() + 1);
+                basketBall.setPosX(1100);     // se reposiciona el basketBall
+                basketBall.setPosY(((int) (Math.random() * (yMayor - yMenor))) + yMenor);
 
             }
 
@@ -366,7 +366,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
      */
     public void paint1(Graphics g) {
         if (VIDAS > 0) {
-            if (gatoBueno != null && listaIzq != null) {
+            if (fireBasket != null && listaIzq != null) {
 
                 g.drawImage(background, 0, 0, this);
 
@@ -374,20 +374,20 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
 
                     g.setFont(new Font("Avenir Black", Font.BOLD, 60));
                     g.setColor(Color.white);
-                    g.drawString(gatoBueno.getPausado(), 400, 400);
+                    g.drawString(fireBasket.getPausado(), 400, 400);
 
                 } else {
 
                     //Dibuja string Score
                     g.setColor(Color.black);
                     g.setFont(new Font("Avenir Black", Font.BOLD, 18));
-                    g.drawString("Score: " + perroMalo.getConteo(), 850, 60);
+                    g.drawString("Score: " + basketBall.getConteo(), 850, 60);
 
                     //Dibuja la imagen en la posicion Actualizada
                     if (!crashed && (timeRetard < 20)) {
-                        g.drawImage(gatoBueno.getImagenI(), gatoBueno.getPosX(), gatoBueno.getPosY(), this);
+                        g.drawImage(fireBasket.getImagenI(), fireBasket.getPosX(), fireBasket.getPosY(), this);
                     } else {
-                        g.drawString(gatoBueno.getGone(), gatoBueno.getPosX(), gatoBueno.getPosY());
+                        g.drawString(fireBasket.getGone(), fireBasket.getPosX(), fireBasket.getPosY());
                         timeRetard++;
                         if (timeRetard == 19) {
                             crashed = false;
@@ -397,13 +397,13 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
                     g.setColor(Color.white);
                     // Lista de Izq a Der
                     for (int i = 0; i < listaIzq.size(); i++) {
-                        Malo perroMalo = (Malo) listaIzq.get(i);
-                        g.drawImage(perroMalo.getImagenI(), perroMalo.getPosX(), perroMalo.getPosY(), this);
+                        Pelota basketBall = (Pelota) listaIzq.get(i);
+                        g.drawImage(basketBall.getImagenI(), basketBall.getPosX(), basketBall.getPosY(), this);
                     }
                     //Lista de Derecha a Izq
                     for (int i = 0; i < listaDer.size(); i++) {
-                        Malo perroMalo = (Malo) listaDer.get(i);
-                        g.drawImage(perroMalo.getImagenI(), perroMalo.getPosX(), perroMalo.getPosY(), this);
+                        Pelota basketBall = (Pelota) listaDer.get(i);
+                        g.drawImage(basketBall.getImagenI(), basketBall.getPosX(), basketBall.getPosY(), this);
                     }
 
                 }
@@ -479,11 +479,11 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
 
     public void mousePressed(MouseEvent e) {
 
-        if (gatoBueno.intersectaPuntos(e.getX(), e.getY()) & !IconPressed) {
+        if (fireBasket.intersectaPuntos(e.getX(), e.getY()) & !IconPressed) {
             coordenada_x = e.getX();
             coordenada_y = e.getY();
-            off_x = e.getX() - gatoBueno.getPosX();
-            off_y = e.getY() - gatoBueno.getPosY();
+            off_x = e.getX() - fireBasket.getPosX();
+            off_y = e.getY() - fireBasket.getPosY();
             IconPressed = true;
             //draggedUP=true;
         }
