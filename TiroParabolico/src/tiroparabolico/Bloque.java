@@ -15,11 +15,11 @@ package tiroparabolico;
 import java.awt.Image;
 import java.awt.Toolkit;
 
-public class Bueno extends Base {
+public class Bloque extends Base {
 
     private int speed;
 
-    public Bueno(int posX, int posY) {
+    public Bloque(int posX, int posY) {
         super(posX, posY);
         
         //Obtencion de imagenes para la animacion
