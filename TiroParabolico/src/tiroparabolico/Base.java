@@ -4,7 +4,7 @@
  *@Author Gustavo Ferrufino
  *@Matricula A00812572
  */
-package javaframeexamen1;
+package tiroparabolico;
 
 import javax.swing.ImageIcon;
 import java.awt.Image;

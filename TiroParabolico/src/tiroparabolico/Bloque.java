@@ -19,8 +19,8 @@ public class Bloque extends Base {
 
     private int speed;
 
-    public Bloque(int posX, int posY) {
-        super(posX, posY);
+    public Bloque(int posX, int posY, Image image) {
+        super(posX, posY, image);
         
         speed = 5;
 
