@@ -98,7 +98,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         posY = 100;
 
         URL fbURL = this.getClass().getResource("images/fireBasket.gif");
-        fireBasket = new Bloque((getWidth() - 150), (getHeight() - 140), Toolkit.getDefaultToolkit().getImage(fbURL));
+        fireBasket = new Bloque((getWidth() - 150), (getHeight() - 130), Toolkit.getDefaultToolkit().getImage(fbURL));
 
         URL bbURL = this.getClass().getResource("images/basketBall.gif");
         basketBall = new Pelota(50, 250, Toolkit.getDefaultToolkit().getImage(bbURL));
@@ -203,8 +203,8 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
             fireBasket.setPosY(getHeight() - fireBasket.getAlto());
         }
 
-        if (fireBasket.getPosX() < 0) {                             //si se pasa del borde de la izquierda
-            fireBasket.setPosX(0);
+        if (fireBasket.getPosX() < 150) {                             //si se pasa del borde de la izquierda
+            fireBasket.setPosX(150);
         }
 
         if (fireBasket.getPosX() + fireBasket.getAncho() > getWidth()) {      //si se pasa del borde de la derecha
