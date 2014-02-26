@@ -14,11 +14,12 @@ public class Base {
 
     private int posX;    //posicion en x.       
     private int posY;	//posicion en y.
-    protected Animacion animacion;    //icono.
+    private ImageIcon icono;    //icono.
 
-    public Base(int posX, int posY) {
+    public Base(int posX, int posY, Image image) {
         this.posX = posX;
         this.posY = posY;
+        icono = new ImageIcon(image);
 
     }
 
@@ -39,7 +40,7 @@ public class Base {
     public int getPosX() {
         return posX;
     }
-    
+
     /*
      *Clase setPosY
      *Sirve para definir la posicion en Y
@@ -48,7 +49,7 @@ public class Base {
     public void setPosY(int posY) {
         this.posY = posY;
     }
-    
+
     /*
      *Clase getPosY
      *regresa la posicion en Y
@@ -63,30 +64,55 @@ public class Base {
      *regresa lo ancho de un objeto ImageIcon
      *en este caso de la animacion creada. Malo/Bueno
      */
-    public int getAncho() {
-
-        return (new ImageIcon(animacion.getImagen()).getIconWidth());
+    public void setImageIcon(ImageIcon icono) {
+        this.icono = icono;
     }
-    
-    /*
-     *Clase getAlto
-     *regresa la altura de un objeto ImageIcon
-     *en este caso de la animacion creada. Malo/Bueno
+
+    /**
+     * Metodo de acceso que regresa el icono del objeto
+     *
+     * @return icono es el <code>icono</code> del objeto.
+     */
+    public ImageIcon getImageIcon() {
+        return icono;
+    }
+
+    /**
+     * Metodo de acceso que regresa el ancho del icono
+     *
+     * @return un objeto de la clase <code>ImageIcon</code> que es el ancho del
+     * icono.
+     */
+    public int getAncho() {
+        return icono.getIconWidth();
+    }
+
+    /**
+     * Metodo de acceso que regresa el alto del icono
+     *
+     * @return un objeto de la clase <code>ImageIcon</code> que es el alto del
+     * icono.
      */
     public int getAlto() {
-
-        return (new ImageIcon(animacion.getImagen()).getIconHeight());
+        return icono.getIconHeight();
     }
 
-    /*
-     *Clase getImagenI
-     *regresa un objeto ImageIcon
-     *de la animacion creada. Malo/Bueno
+    /**
+     * Metodo de acceso que regresa la imagen del icono
+     *
+     * @return un objeto de la clase <code>Image</code> que es la imagen del
+     * icono.
      */
     public Image getImagenI() {
-        return (new ImageIcon(animacion.getImagen()).getImage());
+        return icono.getImage();
     }
 
+    /**
+     * Metodo de acceso que regresa un nuevo rectangulo
+     *
+     * @return un objeto de la clase <code>Rectangle</code> que es el perimetro
+     * del rectangulo
+     */
     /*
      *Clase getPerimetro
      *regresa el perimetro de un objeto formado por 
@@ -95,7 +121,7 @@ public class Base {
     public Rectangle getPerimetro() {
         return new Rectangle(getPosX(), getPosY(), getAncho(), getAlto());
     }
-    
+
     /*
      *Clase instersecta2
      *recibe un objeto tipo base 
@@ -121,7 +147,7 @@ public class Base {
      *Metodo que sirve para saber si un objeto malo
      *Intersecta con un perimetro
      */
-    public boolean intersecta(Malo obj) {
+    public boolean intersecta(Base obj) {
         // return getPerimRec().intersects(obj.getPerimetro());
         return getPerimetro().intersects(obj.getPerimetro());
     }
@@ -130,7 +156,5 @@ public class Base {
      *recibe un long
      *Actualiza la animacion
      */
-    public void updateS(long t) {
-        animacion.actualiza(t);
-    }
+
 }

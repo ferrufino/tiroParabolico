@@ -3,34 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package tiroparabolico;
 
 import java.awt.Image;
 import java.awt.Toolkit;
 
-public class Malo extends Base {
+public class Pelota extends Base {
 
     private static int conteo;
-    private int speed;
+    private int speedX;
+    private int speedY;
+    
 
-    public Malo(int posX, int posY) {
-        super(posX, posY);
+    public Pelota(int posX, int posY, Image image) {
+        super(posX, posY,image);
+        speedX = 0;
+        speedY = 0;
 
-        Image malo1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/bad_dog1.png"));
-        Image malo2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/bad_dog2.png"));
-        Image malo3 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/bad_dog3.png"));
-        Image malo4 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/bad_dog4.png"));
-
-        animacion = new Animacion();
-        animacion.sumaCuadro(malo1, 100);
-        animacion.sumaCuadro(malo2, 100);
-        animacion.sumaCuadro(malo3, 100);
-        animacion.sumaCuadro(malo4, 100);
-
-        speed = (int) ((Math.random() * (3)) + 3);
-
-       
     }
 
     /*
@@ -41,7 +30,7 @@ public class Malo extends Base {
     public static int getConteo() {
         return conteo;
     }
-    
+
     /*
      *Clase setConteo
      *Sirve para definir el conteo
@@ -56,16 +45,24 @@ public class Malo extends Base {
      *Sirve para definir el conteo
      * recibe de parametro un entero
      */
-    public int getSpeed() {
-        return speed;
+    public int getSpeedX() {
+        return speedX;
     }
 
-     /*
+    public int getSpeedY() {
+        return speedY;
+    }
+
+    /*
      *Clase setSpeed
      *Sirve para definir la velocidad
      * recibe de parametro un entero
      */
-    public void setSpeed(int cant) {
-        speed = cant;
+    public void setSpeedX(int cant) {
+        speedX = cant;
+    }
+
+    public void setSpeedY(int cant) {
+        speedY = cant;
     }
 }
