@@ -69,7 +69,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
     private int CUADRANTE;
 
 //constructor
-    public AppletExamen1() {
+    public PlayGround() {
 
         setSize(1000, 700);
         crashed = false;
