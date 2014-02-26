@@ -83,10 +83,10 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
 
         SCORE = 0;                    //puntaje inicial
         VIDAS = 1;                    //vida inicial
-        xMayor = (getWidth() - getWidth() / 10);           //posicion máxima en x que tendrán los basketBalls
-        xMenor = 0;           //posicion mínima en x que tendrán los basketBalls
-        yMayor = (getHeight() - (getHeight() / 10));          //posicion máxima en y que tendrán los basketBalls
-        yMenor = 10;        //posicion mínima en y que tendrán los basketBalls
+        xMayor = (getWidth() - getWidth() / 10);           //posicion máxima en x que tendrán el basketBall
+        xMenor = 0;           //posicion mínima en x que tendrá el basketBall
+        yMayor = (getHeight() - (getHeight() / 10));          //posicion máxima en y que tendrán el basketBall
+        yMenor = 10;        //posicion mínima en y que tendrá el basketBall
 
         //Se cargan los sonidos.
         URL beURL = this.getClass().getResource("sounds/fail-buzzer-03.wav");
@@ -98,10 +98,10 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         posY = 100;
 
         URL fbURL = this.getClass().getResource("images/fireBasket.gif");
-        fireBasket = new Bloque((getWidth() - 150), (getHeight() - 80), Toolkit.getDefaultToolkit().getImage(fbURL));
+        fireBasket = new Bloque((getWidth() - 150), (getHeight() - 140), Toolkit.getDefaultToolkit().getImage(fbURL));
 
         URL bbURL = this.getClass().getResource("images/basketBall.gif");
-        basketBall = new Pelota(50, 300, Toolkit.getDefaultToolkit().getImage(bbURL));
+        basketBall = new Pelota(50, 250, Toolkit.getDefaultToolkit().getImage(bbURL));
 
         URL xuURL = this.getClass().getResource("images/gOVER.png");
         gameover = Toolkit.getDefaultToolkit().getImage(xuURL);
