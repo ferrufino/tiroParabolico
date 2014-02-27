@@ -45,7 +45,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
     private int coordenada_x;
     private int coordenada_y;
     private int contPerdidas;
-
+    private int difVel;
     private int vidas;
     private boolean boolTime;
     private double time;
@@ -88,6 +88,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         timeRetard = 0;
         teclaPresionada = 0;
         contPerdidas = 0;
+        difVel=0;
        
         gravedad=5;
         time = 0;
@@ -171,6 +172,8 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         
          if (contPerdidas == 3) {
                 contPerdidas = 0;
+                difVel+=3;
+                gravedad+=4;
                 vidas--;
             }
   
@@ -188,12 +191,12 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
             switch (teclaPresionada) {
                 case 1: {
 
-                    fireBasket.setPosX(fireBasket.getPosX() - 4);
+                    fireBasket.setPosX(fireBasket.getPosX() - 7);
                     break; //se mueve hacia la izquierda
                 }
                 case 2: {
 
-                    fireBasket.setPosX(fireBasket.getPosX() + 4);
+                    fireBasket.setPosX(fireBasket.getPosX() + 7);
                     break; //se mueve hacia la derecha
                 }
             }
@@ -445,7 +448,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         if (!pause) {
             if (box.contains(e.getX(), e.getY()) && (box.getX() == basketBall.getPosX())) {
                 boxClicked = true;
-                speed = (int)((Math.random() *(5-2)) + 2); 
+                speed = (int)((Math.random() *((5)-(2)))+ 2); 
                 velXI = speed *  (Math.cos(Math.toRadians(45)));
                 velYI = speed *  (Math.sin(Math.toRadians(45)));
                 boolTime = true;
