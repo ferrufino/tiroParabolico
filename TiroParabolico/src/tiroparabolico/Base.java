@@ -119,7 +119,7 @@ public class Base {
      *la altura, ancho, posX, posY
      */
     public Rectangle getPerimetro() {
-        return new Rectangle(getPosX(), getPosY(), getAncho(), getAlto());
+        return new Rectangle(getPosX(), getPosY(), getAncho(), getAlto()-50);
     }
 
     /*
