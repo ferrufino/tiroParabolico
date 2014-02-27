@@ -19,6 +19,7 @@ public class Pelota extends Base {
         super(posX, posY,image);
         speedX = 0;
         speedY = 0;
+        conteo = 0;
 
     }
 

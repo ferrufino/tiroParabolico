@@ -36,15 +36,17 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
     private Bloque fireBasket;    // Objeto de la clase Elefante
     private Pelota basketBall;   //Objeto de la clase Raton
     private Rectangle box;
+   
     
+    private int gravedad;
     private int cantidad;               //cantidadidad de basketBalls
     private int timeRetard;    //Contador para retrazar aparicion de DESAPARECE
     private boolean boxClicked;
     private int coordenada_x;
     private int coordenada_y;
-    private int off_x;
-    private int off_y;
-    private int VIDAS;
+    private int contPerdidas;
+
+    private int vidas;
     private boolean boolTime;
     private double time;
     
@@ -85,11 +87,12 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         instrucciones = false;
         timeRetard = 0;
         teclaPresionada = 0;
-        
+        contPerdidas = 0;
        
+        gravedad=5;
         time = 0;
         score = 0;                    //puntaje inicial
-        VIDAS = 1;                    //vida inicial
+        vidas = 5;                    //vida inicial
         xMayor = (getWidth() - getWidth() / 10);           //posicion máxima en x que tendrán el basketBall
         xMenor = 0;           //posicion mínima en x que tendrá el basketBall
         yMayor = (getHeight() - (getHeight() / 10));          //posicion máxima en y que tendrán el basketBall
@@ -144,7 +147,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
      */
     public void run() {
         tiempoActual = System.currentTimeMillis();
-        while (VIDAS > 0) {
+        while (vidas > 0) {
             if (!pause) {
                 Actualiza();
                 ChecaColision();
@@ -165,13 +168,17 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
      *
      */
     public void Actualiza() {
-
+        
+         if (contPerdidas == 3) {
+                contPerdidas = 0;
+                vidas--;
+            }
   
         if (boxClicked) {
             
            time += 0.020;
            basketBall.setSpeedX(velXI);
-           basketBall.setSpeedY( (velYI*-1) + 5 *time);
+           basketBall.setSpeedY( (velYI*-1) + gravedad *time);
            basketBall.setPosX(basketBall.getPosX() + (int) (basketBall.getSpeedX()));
            basketBall.setPosY(basketBall.getPosY() + (int) (basketBall.getSpeedY()));
 
@@ -224,12 +231,16 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
       
        //basketBall colisiona abajo
         if (basketBall.getPosY()+ basketBall.getAlto() > getHeight()) {  
+            
+            contPerdidas+=1;
             fail.play();
             boxClicked = false;
             time = 0;
             basketBall.setPosX(50);  //se reposiciona en su posicion inicial
             basketBall.setPosY(250);
             basketBall.setSpeedX(0);
+            if (basketBall.getConteo()> 0) 
+            basketBall.setConteo(basketBall.getConteo()-1);
         }
 
         //Colision entre objetos
@@ -238,7 +249,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
             time=0;
         
             collide.play();
-            score += 100;
+            basketBall.setConteo(basketBall.getConteo()+2);
           
             basketBall.setPosX(50);     // se reposiciona el basketBall
             basketBall.setPosY(250);
@@ -283,7 +294,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
      * @paramg es el <code>objeto grafico</code> usado para dibujar.
      */
     public void paint1(Graphics g) {
-        if (VIDAS > 0) {
+        if (vidas > 0) {
             if (fireBasket != null) {
 
                 g.drawImage(background, 0, 0, this);
@@ -331,9 +342,11 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
                         pause = true;
                     } else {
                         //Dibuja string Score
-                        g.setColor(Color.black);
-                        g.setFont(new Font("Avenir Black", Font.BOLD, 18));
-                        g.drawString("Score: " + basketBall.getConteo(), 850, 60);
+                        g.setColor(Color.white);
+                        g.setFont(new Font("Avenir Black", Font.ITALIC, 18));
+      
+                        g.drawString("Score: " + basketBall.getConteo(), 600, 60);
+                        g.drawString("Life: " + vidas, 600, 80);
 
                         //Dibuja la imagen en la posicion Actualizada
                         if (!crashed && (timeRetard < 20)) {
@@ -359,7 +372,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
             }
 
         } else {
-            g.drawImage(gameover, -200, 0, this);
+            g.drawImage(gameover, 0, 0, this);
         }
     }
     /*
