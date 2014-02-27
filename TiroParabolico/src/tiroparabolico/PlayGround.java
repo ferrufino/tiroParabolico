@@ -90,7 +90,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         contPerdidas = 0;
         difVel=0;
        
-        gravedad=5;
+        gravedad=3;
         time = 0;
         score = 0;                    //puntaje inicial
         vidas = 5;                    //vida inicial
@@ -172,8 +172,18 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         
          if (contPerdidas == 3) {
                 contPerdidas = 0;
-                difVel+=3;
-                gravedad+=4;
+                
+                if (gravedad <17) {
+                    gravedad+=7;
+                    difVel+=2;
+                } else if (gravedad <=24){
+                    gravedad+=14;
+                    difVel+=1;
+                } else {
+                  gravedad+=14;
+                
+                }
+                
                 vidas--;
             }
   
@@ -191,12 +201,12 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
             switch (teclaPresionada) {
                 case 1: {
 
-                    fireBasket.setPosX(fireBasket.getPosX() - 7);
+                    fireBasket.setPosX(fireBasket.getPosX() - 6);
                     break; //se mueve hacia la izquierda
                 }
                 case 2: {
 
-                    fireBasket.setPosX(fireBasket.getPosX() + 7);
+                    fireBasket.setPosX(fireBasket.getPosX() + 6);
                     break; //se mueve hacia la derecha
                 }
             }
@@ -448,7 +458,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         if (!pause) {
             if (box.contains(e.getX(), e.getY()) && (box.getX() == basketBall.getPosX())) {
                 boxClicked = true;
-                speed = (int)((Math.random() *((5)-(2)))+ 2); 
+                speed = (int)((Math.random() *((5+difVel)-(2+difVel)))+ 2+difVel); 
                 velXI = speed *  (Math.cos(Math.toRadians(45)));
                 velYI = speed *  (Math.sin(Math.toRadians(45)));
                 boolTime = true;
