@@ -115,7 +115,8 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         soundOn = "On";
         soundOff = "Off";
         soundsOn = true;
-    
+
+
         nombreArchivo = "Archivo.txt";
 
         gravedad = 7;
@@ -326,9 +327,11 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
             basketBall.setPosX(50);  //se reposiciona en su posicion inicial
             basketBall.setPosY(250);
             basketBall.setSpeedX(0);
+
            // basketBall.setSpeedY(0);
             bbspeedy=basketBall.getSpeedY();
             bbspeedx=basketBall.getSpeedX();
+
             if (basketBall.getConteo() > 0) {
                 basketBall.setConteo(basketBall.getConteo() - 1);
             }
@@ -401,10 +404,12 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         PrintWriter fileOut = new PrintWriter(new FileWriter(nombreArchivo));
         String x;
         //direccion,score,bbposx,bbposy,fbposx,fbposy,bbspeedx,bbspeedy,time;
+
         x = "" + (teclaPresionada) + "," + score + "," + "" + basketBall.getPosX() + "," + 
                 basketBall.getPosY() + "," + fireBasket.getPosX() + "," + fireBasket.getPosY() + "," + 
                 basketBall.getSpeedX() + "," + basketBall.getSpeedY() + "," + time + "," + vidas + "," + 
                 contPerdidas + "," + gravedad + ","+boxClicked+","+velXI+","+velYI;
+
         fileOut.println(x.toString());
         fileOut.close();
     }
@@ -495,6 +500,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
                         //Dibuja string Score
                         g.setColor(Color.white);
                         g.setFont(new Font("Avenir Black", Font.ITALIC, 18));
+
                          g.drawString("DEBUG velTemp: " + bbspeedx+ " "+bbspeedy, 90, 60);
                          g.drawString("DEBUG velObj: " + basketBall.getSpeedX()+ " "+basketBall.getSpeedY(), 90, 100);
                          g.drawString("DEBUG gravity + time: " + gravedad+ " "+time, 90, 80);
@@ -502,6 +508,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
                          g.drawString("DEBUG velI: " + velXI+ " "+velYI, 90, 140);
                          
                         //g.drawString("Score: " + basketBall.getConteo(), 550, 60);
+
                         g.drawString("Life: " + vidas, 550, 80);
                         if (soundsOn) {
                             g.drawString("Sound: " + soundOn, 650, 80);
