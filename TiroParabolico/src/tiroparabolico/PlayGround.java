@@ -250,10 +250,10 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
                 gravedad += 7;
                 difVel += 2;
             } else if (gravedad <= 24) {
-                gravedad += 14;
+                gravedad += 18;
                 difVel += 1;
             } else {
-                gravedad += 14;
+                gravedad += 28;
 
             }
 
