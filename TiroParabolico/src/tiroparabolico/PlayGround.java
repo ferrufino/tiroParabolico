@@ -579,7 +579,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
                 speed = (int) ((Math.random() * ((6 + difVel) - (3 + difVel))) + 3 + difVel);
                 velXI = speed * (Math.cos(Math.toRadians(45)));
                 velYI = speed * (Math.sin(Math.toRadians(45)));
-                boolTime = true;
+              
             }
         }
 
