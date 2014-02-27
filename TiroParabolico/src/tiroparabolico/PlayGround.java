@@ -6,6 +6,7 @@
  */
 package tiroparabolico;
 
+import java.awt.Rectangle;
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.awt.Graphics;
@@ -27,34 +28,38 @@ import javax.swing.JFrame;//
 public class PlayGround extends JFrame implements Runnable, KeyListener, MouseListener, MouseMotionListener {
 
     private static final long serialVersionUID = 1L;
-    // Se declaran las variables. 
+    // Se declaran las variables objetos. 
     private Image dbImage;	// Imagen a proyectar	
     private Graphics dbg;	// Objeto grafico
     private SoundClip fail;    // Objeto AudioClip
     private SoundClip collide;    //Objeto AudioClip 
     private Bloque fireBasket;    // Objeto de la clase Elefante
     private Pelota basketBall;   //Objeto de la clase Raton
-    //listas
-    private LinkedList listaIzq;           //lista de basketBalls por la Izquierda
-    private LinkedList listaDer;           //lista de perrosMalos por la derecha
-
+    private Rectangle box;
+    
     private int cantidad;               //cantidadidad de basketBalls
     private int timeRetard;    //Contador para retrazar aparicion de DESAPARECE
-    private boolean IconPressed;
+    private boolean boxClicked;
     private int coordenada_x;
     private int coordenada_y;
     private int off_x;
     private int off_y;
     private int VIDAS;
+    private boolean boolTime;
+    private double time;
+    
     //imagenes
     private Image gameover;
     private Image background;
     private Image chocan;
 
+    private double velXI;
+    private double velYI;
+    private int speed;
     private char teclaPresionada;
     private int posX;
     private int posY;
-    private int SCORE;
+    private int score;
     private int POINTS;
     private int xMayor;
     private int xMenor;
@@ -80,14 +85,17 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         instrucciones = false;
         timeRetard = 0;
         teclaPresionada = 0;
-
-        SCORE = 0;                    //puntaje inicial
+        
+       
+        time = 0;
+        score = 0;                    //puntaje inicial
         VIDAS = 1;                    //vida inicial
         xMayor = (getWidth() - getWidth() / 10);           //posicion máxima en x que tendrán el basketBall
         xMenor = 0;           //posicion mínima en x que tendrá el basketBall
         yMayor = (getHeight() - (getHeight() / 10));          //posicion máxima en y que tendrán el basketBall
         yMenor = 10;        //posicion mínima en y que tendrá el basketBall
-
+        velXI = 0;
+        velYI = 0;
         //Se cargan los sonidos.
         URL beURL = this.getClass().getResource("sounds/fail-buzzer-03.wav");
         fail = new SoundClip("sounds/fail-buzzer-03.wav");
@@ -103,6 +111,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         URL bbURL = this.getClass().getResource("images/basketBall.gif");
         basketBall = new Pelota(50, 250, Toolkit.getDefaultToolkit().getImage(bbURL));
 
+        box= new Rectangle(50,250, basketBall.getAncho(), basketBall.getAlto());
         URL xuURL = this.getClass().getResource("images/gOVER.png");
         gameover = Toolkit.getDefaultToolkit().getImage(xuURL);
 
@@ -151,16 +160,23 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
     }
 
     /**
-     * Metodo usado para Actualizar la posicion de objetos elefante y
+     * Metodo usado para Actualizar la posicion de objetos fireBasket y
      * basketBall.
      *
      */
     public void Actualiza() {
 
-        //Actualiza la animacion creada de los objetos
-        long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
-        tiempoActual += tiempoTranscurrido;
+  
+        if (boxClicked) {
+            
+           time += 0.020;
+           basketBall.setSpeedX(velXI);
+           basketBall.setSpeedY( (velYI*-1) + 5 *time);
+           basketBall.setPosX(basketBall.getPosX() + (int) (basketBall.getSpeedX()));
+           basketBall.setPosY(basketBall.getPosY() + (int) (basketBall.getSpeedY()));
 
+        }
+        
         if (action) {
             switch (teclaPresionada) {
                 case 1: {
@@ -175,15 +191,10 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
                 }
             }
         }
-        /*
-         if (IconPressed) {
-         fireBasket.setPosY(coordenada_y - off_y);
-         fireBasket.setPosX(coordenada_x - off_x);
 
-         } */
-        //lista de Pelotas que se mueven de izq a derecha 
+         
         if (basketBall.getPosY() < getHeight()) {
-            basketBall.setPosX(basketBall.getPosX() + basketBall.getSpeedX());
+            basketBall.setPosX( (int) (basketBall.getPosX() + basketBall.getSpeedX()));
         }
 
     }
@@ -210,24 +221,28 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         if (fireBasket.getPosX() + fireBasket.getAncho() > getWidth()) {      //si se pasa del borde de la derecha
             fireBasket.setPosX(getWidth() - fireBasket.getAncho());
         }
-        //Listas encadenada de malos de Izq a Derecha
-
-        if (basketBall.getPosX() + basketBall.getAncho() > getWidth()) {    //basketBall colisiona a la derecha del applet
+      
+       //basketBall colisiona abajo
+        if (basketBall.getPosY()+ basketBall.getAlto() > getHeight()) {  
             fail.play();
-            basketBall.setPosX(-10);                                           //se reposiciona en su posicion inicial
-            basketBall.setPosY(((int) (Math.random() * (yMayor - yMenor))) + yMenor);
+            boxClicked = false;
+            time = 0;
+            basketBall.setPosX(50);  //se reposiciona en su posicion inicial
+            basketBall.setPosY(250);
+            basketBall.setSpeedX(0);
         }
 
         //Colision entre objetos
-        //Lista Izq
         if (fireBasket.intersecta(basketBall)) {
-            //&&dragged up
-            crashed = true;
+            boxClicked=false;
+            time=0;
+        
             collide.play();
-            SCORE += 100;
-            basketBall.setConteo(basketBall.getConteo() + 1);
-            basketBall.setPosX(-10);     // se reposiciona el basketBall
-            basketBall.setPosY(((int) (Math.random() * (yMayor - yMenor))) + yMenor);
+            score += 100;
+          
+            basketBall.setPosX(50);     // se reposiciona el basketBall
+            basketBall.setPosY(250);
+            basketBall.setSpeedX(0);
 
         }
 
@@ -272,7 +287,8 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
             if (fireBasket != null) {
 
                 g.drawImage(background, 0, 0, this);
-
+                if (boxClicked) g.drawString("si jala", 50, 50);
+                
                 if (pause) {
 
                     g.setFont(new Font("Avenir Black", Font.BOLD, 60));
@@ -413,24 +429,17 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
      */
 
     public void mouseClicked(MouseEvent e) {
-
-        if ((e.getX() < getWidth() / 2) && (e.getY() < getHeight() / 2)) {
-
-            CUADRANTE = 4; // El mouse fue presionado
-
-        } else if ((e.getX() >= (getWidth() / 2)) && (e.getY() < getHeight() / 2)) {
-
-            CUADRANTE = 1; // El mouse fue presionado
-
-        } else if ((e.getX() < getWidth() / 2) && (e.getY() >= getHeight() / 2)) {
-
-            CUADRANTE = 3; // El mouse fue presionado
-
-        } else {
-
-            CUADRANTE = 2; // El mouse fue presionado
-
+        
+        if (!pause) {
+            if (box.contains(e.getX(), e.getY()) && (box.getX() == basketBall.getPosX())) {
+                boxClicked = true;
+                speed = (int)((Math.random() *(5-2)) + 2); 
+                velXI = speed *  (Math.cos(Math.toRadians(45)));
+                velYI = speed *  (Math.sin(Math.toRadians(45)));
+                boolTime = true;
+            }
         }
+    
     }
 
     public void mouseEntered(MouseEvent e) {
@@ -442,20 +451,11 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
     }
 
     public void mousePressed(MouseEvent e) {
-        /*
-         if (fireBasket.intersectaPuntos(e.getX(), e.getY()) & !IconPressed) {
-         coordenada_x = e.getX();
-         coordenada_y = e.getY();
-         off_x = e.getX() - fireBasket.getPosX();
-         off_y = e.getY() - fireBasket.getPosY();
-         IconPressed = true;
-         //draggedUP=true;
-         }
-         */
+
     }
 
     public void mouseReleased(MouseEvent e) {//metodo cuando el mouse es soltado
-        IconPressed = false;
+
     }
 
     public void mouseMoved(MouseEvent e) {  //metodos de MouseMotionListener
@@ -464,10 +464,6 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
 
     public void mouseDragged(MouseEvent e) {   //metodos de MouseMotionListener
 
-        if (IconPressed) {   //si la imagen está presionada y la imagen se mueve, se guardan posiciones
-            coordenada_x = e.getX();
-            coordenada_y = e.getY();
-        }
     }
 
 }
