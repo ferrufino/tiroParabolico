@@ -16,7 +16,14 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
+import javax.swing.JOptionPane;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -36,7 +43,24 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
     private Bloque fireBasket;    // Objeto de la clase Elefante
     private Pelota basketBall;   //Objeto de la clase Raton
     private Rectangle box;
-   
+    
+   //variables auxiliares para cargar
+    private String[] arr;
+    private String nombreArchivo;
+    private int dir;
+    private int sco;
+    private int bbposx;
+    private int bbposy;
+    private int fbposx;
+    private int fbposy;
+    private double bbspeedx;
+    private double bbspeedy;
+    private double t;
+    private int v;
+    private int cp;
+ 
+    private boolean cargar;
+    private boolean grabar;
     
     private int gravedad;
     private int cantidad;               //cantidadidad de basketBalls
@@ -59,7 +83,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
     private double velXI;
     private double velYI;
     private int speed;
-    private char teclaPresionada;
+    private int teclaPresionada;
     private int posX;
     private int posY;
     private int score;
@@ -76,7 +100,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
     private boolean BEGIN;
     private boolean crashed;
     private boolean instrucciones;
-    private int CUADRANTE;
+    private int g;
 
 //constructor
     public PlayGround() {
@@ -94,7 +118,10 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         soundOn="On";
         soundOff="Off";
         soundsOn=true;
-        gravedad=3;
+        
+        nombreArchivo = "Archivo.txt";
+        
+        gravedad=7;
         time = 0;
         score = 0;                    //puntaje inicial
         vidas = 5;                    //vida inicial
@@ -174,6 +201,38 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
      */
     public void Actualiza() {
         
+             if (grabar) {
+            try {
+ 
+                grabaArchivo();    //Graba el vector en el archivo.
+            } catch (IOException e) {
+                System.out.println("Error en " + e.toString());
+            }
+            grabar = false;
+        }
+        if (cargar) {
+            try {
+ 
+                leeArchivo();    //Graba el vector en el archivo.
+            } catch (IOException e) {
+                //System.out.println("Error en " + e.toString());
+            }
+            basketBall.setConteo(sco);
+            teclaPresionada =  dir;
+            basketBall.setPosX(bbposx);
+            basketBall.setPosY(bbposy);
+            fireBasket.setPosX(fbposx);
+            fireBasket.setPosY(fbposy);
+            basketBall.setSpeedX(bbspeedx);
+            basketBall.setSpeedY(bbspeedy);
+            time = t;
+            cargar = false;
+            vidas=v;
+            contPerdidas =cp;
+            gravedad = g;
+        }
+        
+        
          if (contPerdidas == 3) {
                 contPerdidas = 0;
                 
@@ -205,12 +264,12 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
             switch (teclaPresionada) {
                 case 1: {
 
-                    fireBasket.setPosX(fireBasket.getPosX() - 6);
+                    fireBasket.setPosX(fireBasket.getPosX() - 4);
                     break; //se mueve hacia la izquierda
                 }
                 case 2: {
 
-                    fireBasket.setPosX(fireBasket.getPosX() + 6);
+                    fireBasket.setPosX(fireBasket.getPosX() + 4);
                     break; //se mueve hacia la derecha
                 }
                 
@@ -261,8 +320,9 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
             basketBall.setPosX(50);  //se reposiciona en su posicion inicial
             basketBall.setPosY(250);
             basketBall.setSpeedX(0);
-            if (basketBall.getConteo()> 0) 
+            if (basketBall.getConteo()> 0) {
             basketBall.setConteo(basketBall.getConteo()-1);
+            }
         }
 
         //Colision entre objetos
@@ -280,6 +340,47 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
 
         }
 
+    }
+    
+     public void leeArchivo() throws IOException {
+ 
+        BufferedReader fileIn;
+        try {
+            fileIn = new BufferedReader(new FileReader(nombreArchivo));
+        } catch (FileNotFoundException e) {
+            //direccion,score,bbposx,bbposy,fbposx,fbposy,bbspeedx,bbspeedy,time;
+            File puntos = new File(nombreArchivo);
+            PrintWriter fileOut = new PrintWriter(puntos);
+            fileOut.println("0,0,50,250,650,460,0,0,0,5,0,3");
+            fileOut.close();
+            fileIn = new BufferedReader(new FileReader(nombreArchivo));
+        }
+        String dato = fileIn.readLine();
+ 
+        arr = dato.split(",");
+        dir = ((arr[0].charAt(0)));
+        sco = (Integer.parseInt(arr[1]));
+        bbposx = (Integer.parseInt(arr[2]));
+        bbposy = (Integer.parseInt(arr[3]));
+        fbposx = (Integer.parseInt(arr[4]));
+        fbposy = (Integer.parseInt(arr[5]));
+        bbspeedx = Double.valueOf(arr[6]).doubleValue();
+        bbspeedy = Double.valueOf(arr[7]).doubleValue();
+        t = Double.valueOf(arr[8]).doubleValue();
+        v = (Integer.parseInt(arr[9]));
+        cp = (Integer.parseInt(arr[10]));
+        g = (Integer.parseInt(arr[11]));
+        fileIn.close();
+    }
+ 
+    public void grabaArchivo() throws IOException {
+ 
+        PrintWriter fileOut = new PrintWriter(new FileWriter(nombreArchivo));
+        String x;
+        //direccion,score,bbposx,bbposy,fbposx,fbposy,bbspeedx,bbspeedy,time;
+        x =""+ (teclaPresionada) + "," + score + "," + "" + basketBall.getPosX() + "," + basketBall.getPosY() + "," + fireBasket.getPosX() + "," + fireBasket.getPosY() + "," + basketBall.getSpeedX() + "," + basketBall.getSpeedY() + "," + time + ","+vidas + "," + contPerdidas+","+gravedad;
+        fileOut.println(x.toString());
+        fileOut.close();
     }
 
     /**
@@ -430,10 +531,10 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         }
 
         if (e.getKeyCode() == KeyEvent.VK_G) {
-
+                 grabar = true;
         }
         if (e.getKeyCode() == KeyEvent.VK_C) {
-
+                cargar = true;
         }
         if (e.getKeyCode() == KeyEvent.VK_I) {
 
@@ -473,7 +574,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         if (!pause) {
             if (box.contains(e.getX(), e.getY()) && (box.getX() == basketBall.getPosX())) {
                 boxClicked = true;
-                speed = (int)((Math.random() *((5+difVel)-(2+difVel)))+ 2+difVel); 
+                speed = (int)((Math.random() *((6+difVel)-(3+difVel)))+ 3+difVel); 
                 velXI = speed *  (Math.cos(Math.toRadians(45)));
                 velYI = speed *  (Math.sin(Math.toRadians(45)));
                 boolTime = true;
