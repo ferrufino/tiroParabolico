@@ -287,7 +287,6 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
             if (fireBasket != null) {
 
                 g.drawImage(background, 0, 0, this);
-                if (boxClicked) g.drawString("si jala", 50, 50);
                 
                 if (pause) {
 
