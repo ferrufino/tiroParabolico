@@ -71,6 +71,8 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
     //imagenes
     private Image gameover; //imagen de gameover
     private Image background;
+    private Image basketBall1;
+    private Image fireBasket1;
     private Image chocan;
     private String soundOn;
     private String soundOff;
@@ -92,7 +94,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
     private long tiempoActual;
     private long tiempoInicial;
     private boolean BEGIN;
-    private boolean crashed;
+    private boolean ballClicked;
     private boolean instrucciones;
     private int g;
     private String bclicked;
@@ -103,7 +105,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
     public PlayGround() {
 
         setSize(800, 600);
-        crashed = false;
+        ballClicked = false;
         BEGIN = true;
         pause = false;
         action = false;
@@ -115,6 +117,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         soundOn = "On";
         soundOff = "Off";
         soundsOn = true;
+        
 
 
         nombreArchivo = "Archivo.txt";
@@ -130,10 +133,10 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         velXI = 0;
         velYI = 0;
         //Se cargan los sonidos.
-        URL beURL = this.getClass().getResource("sounds/fail-buzzer-03.wav");
+    
         fail = new SoundClip("sounds/fail-buzzer-03.wav");
-        URL baURL = this.getClass().getResource("sounds/Choque.wav");
-        collide = new SoundClip("sounds/Choque.wav");
+     
+        collide = new SoundClip("sounds/cheer.wav");
 
         posX = 100;     //se generarán los basketBalls en posiciones aleatorias fuera del applet
         posY = 100;
@@ -150,6 +153,13 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
 
         URL bgURL = this.getClass().getResource("images/background3.jpg");
         background = Toolkit.getDefaultToolkit().getImage(bgURL);
+        
+        URL bbalURL = this.getClass().getResource("images/basketBall1.png");
+        basketBall1 = Toolkit.getDefaultToolkit().getImage(bbalURL);
+        
+        URL fbasURL = this.getClass().getResource("images/fireBasket1.png");
+        fireBasket1 = Toolkit.getDefaultToolkit().getImage(fbasURL);
+
 
         URL cHURL = this.getClass().getResource("images/boom.png");
         chocan = Toolkit.getDefaultToolkit().getImage(cHURL);
@@ -316,7 +326,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         }
 
         //basketBall colisiona abajo
-        if (basketBall.getPosY() + basketBall.getAlto() > getHeight()) {
+        if (basketBall.getPosY() + basketBall.getAlto() > getHeight()-30) {
 
             contPerdidas += 1;
             if (soundsOn) {
@@ -335,6 +345,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
             if (basketBall.getConteo() > 0) {
                 basketBall.setConteo(basketBall.getConteo() - 1);
             }
+            ballClicked=false;
         }
 
         //Colision entre objetos
@@ -349,6 +360,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
             basketBall.setPosX(50);     // se reposiciona el basketBall
             basketBall.setPosY(250);
             basketBall.setSpeedX(0);
+            ballClicked=false;
 
         }
 
@@ -516,20 +528,21 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
                             g.drawString("Sound: " + soundOff, 650, 80);
                         }
 
-                        //Dibuja la imagen en la posicion Actualizada
-                        if (!crashed && (timeRetard < 20)) {
+                
+                        g.setColor(Color.white);
+                        
+                        if (action) {
                             g.drawImage(fireBasket.getImagenI(), fireBasket.getPosX(), fireBasket.getPosY(), this);
                         } else {
-                            g.drawString(fireBasket.getGone(), fireBasket.getPosX(), fireBasket.getPosY());
-                            timeRetard++;
-                            if (timeRetard == 19) {
-                                crashed = false;
-                                timeRetard = 0;
-                            }
+                            g.drawImage(fireBasket1, fireBasket.getPosX(), fireBasket.getPosY(), this);
                         }
-                        g.setColor(Color.white);
+                        if (ballClicked) {
+                            g.drawImage(basketBall.getImagenI(), basketBall.getPosX(), basketBall.getPosY(), this);
 
-                        g.drawImage(basketBall.getImagenI(), basketBall.getPosX(), basketBall.getPosY(), this);
+                        } else {
+                            g.drawImage(basketBall1, basketBall.getPosX(), basketBall.getPosY(), this);
+
+                        }
                     }
 
                 }
@@ -615,6 +628,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
                 speed = (int) ((Math.random() * ((6 + difVel) - (3 + difVel))) + 3 + difVel);
                 velXI = speed * (Math.cos(Math.toRadians(45)));
                 velYI = speed * (Math.sin(Math.toRadians(45)));
+                ballClicked=true;
               
             }
         }
@@ -635,6 +649,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
 
     public void mouseReleased(MouseEvent e) {//metodo cuando el mouse es soltado
 
+        ballClicked=false;
     }
 
     public void mouseMoved(MouseEvent e) {  //metodos de MouseMotionListener
