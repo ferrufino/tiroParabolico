@@ -125,7 +125,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         gravedad = 7;
         time = 0;
         score = 0;                    //puntaje inicial
-        vidas = 0;                    //vida inicial
+        vidas = 5;                    //vida inicial
         xMayor = (getWidth() - getWidth() / 10);           //posicion máxima en x que tendrán el basketBall
         xMenor = 0;           //posicion mínima en x que tendrá el basketBall
         yMayor = (getHeight() - (getHeight() / 10));          //posicion máxima en y que tendrán el basketBall
@@ -316,8 +316,8 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
             fireBasket.setPosY(getHeight() - fireBasket.getAlto());
         }
 
-        if (fireBasket.getPosX() < 150) {                             //si se pasa del borde de la izquierda
-            fireBasket.setPosX(150);
+        if (fireBasket.getPosX() < 350) {                             //si se pasa del borde de la izquierda
+            fireBasket.setPosX(350);
         }
 
         if (fireBasket.getPosX() + fireBasket.getAncho() > getWidth()) {      //si se pasa del borde de la derecha
