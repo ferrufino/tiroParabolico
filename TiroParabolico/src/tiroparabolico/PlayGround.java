@@ -125,7 +125,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         gravedad = 7;
         time = 0;
         score = 0;                    //puntaje inicial
-        vidas = 5;                    //vida inicial
+        vidas = 0;                    //vida inicial
         xMayor = (getWidth() - getWidth() / 10);           //posicion máxima en x que tendrán el basketBall
         xMenor = 0;           //posicion mínima en x que tendrá el basketBall
         yMayor = (getHeight() - (getHeight() / 10));          //posicion máxima en y que tendrán el basketBall
@@ -134,9 +134,8 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         velYI = 0;
         //Se cargan los sonidos.
     
+        collide = new SoundClip("sounds/applause.wav");
         fail = new SoundClip("sounds/fail-buzzer-03.wav");
-     
-        collide = new SoundClip("sounds/cheer.wav");
 
         posX = 100;     //se generarán los basketBalls en posiciones aleatorias fuera del applet
         posY = 100;
@@ -472,6 +471,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
                     g.setColor(Color.white);
                     g.drawString(fireBasket.getPausado(), 400, 400);
                     //si la bandera booleana de instrucciones esta en true se despliega el menu de instrucciones
+                    
                     if (instrucciones) {
                         g.setColor(Color.black);
                         g.drawRect(getWidth() / 3, getHeight() / 5, 500, 450);
@@ -513,13 +513,7 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
                         g.setColor(Color.white);
                         g.setFont(new Font("Avenir Black", Font.ITALIC, 18));
 
-                         g.drawString("DEBUG velTemp: " + bbspeedx+ " "+bbspeedy, 90, 60);
-                         g.drawString("DEBUG velObj: " + basketBall.getSpeedX()+ " "+basketBall.getSpeedY(), 90, 100);
-                         g.drawString("DEBUG gravity + time: " + gravedad+ " "+time, 90, 80);
-                         g.drawString("DEBUG pos: " + basketBall.getPosX()+ " "+basketBall.getPosY(), 90, 120);
-                         g.drawString("DEBUG velI: " + velXI+ " "+velYI, 90, 140);
-                         
-                        //g.drawString("Score: " + basketBall.getConteo(), 550, 60);
+                        g.drawString("Score: " + basketBall.getConteo(), 550, 60);
 
                         g.drawString("Life: " + vidas, 550, 80);
                         if (soundsOn) {
@@ -554,6 +548,15 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
 
         } else {
             g.drawImage(gameover, 0, 0, this);
+            g.setColor(Color.cyan);
+            g.setFont(new Font("Avenir Black", Font.ITALIC, 30));
+            g.drawString("Creditos: ", 85, 100);
+            g.setFont(new Font("Avenir Black", Font.BOLD, 40));
+            g.drawString("Proyecto de Video Juegos", 140, 150);
+            g.setColor(Color.green);
+            g.setFont(new Font("Avenir Black", Font.BOLD, 35));
+            g.drawString("A00812572 Gustavo Ferrufino", 140, 500);
+            g.drawString("A01191581 Andrés Gutiérrez", 140, 550);
         }
     }
     /*
@@ -583,10 +586,22 @@ public class PlayGround extends JFrame implements Runnable, KeyListener, MouseLi
         }
 
         if (e.getKeyCode() == KeyEvent.VK_G) {
-            grabar = true;
+            
+            if (instrucciones || pause) {
+                grabar=false;
+            } else {
+                grabar = true;
+            }
+            
         }
         if (e.getKeyCode() == KeyEvent.VK_C) {
-            cargar = true;
+            
+            if (instrucciones || pause) {
+                cargar=false;
+            } else {
+                cargar = true;
+            }
+         
         }
         if (e.getKeyCode() == KeyEvent.VK_I) {
 
