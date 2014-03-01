@@ -5,16 +5,16 @@
  *@Matricula A00812572  && A01191581
  */
 package tiroparabolico;
- 
+
 import java.awt.Image;
 import java.awt.Toolkit;
- 
+
 public class Pelota extends Base {
- 
+
     private static int conteo;
     private double speedX;
     private double speedY;
- 
+
     /**
      * Metodo <I>Pelota</I> constructor de la clase <code>Pelota</code>, En este
      * metodo se construye el objeto.
@@ -31,9 +31,9 @@ public class Pelota extends Base {
         speedX = 0;
         speedY = 0;
         conteo = 0;
- 
+
     }
- 
+
     /**
      * Metodo <I>Pelota</I> metodo <code>getConteo</code> de la clase Pelota
      * regresa el valor de la variable de clse conteo utilizado para el score.
@@ -43,7 +43,7 @@ public class Pelota extends Base {
     public static int getConteo() {
         return conteo;
     }
- 
+
     /**
      * Metodo <I>Pelota</I> metodo <code>setConteo</code> de la clase Pelota
      * modifica el score de la variable de clase conteo.
@@ -54,7 +54,7 @@ public class Pelota extends Base {
     public static void setConteo(int cont) {
         conteo = cont;
     }
- 
+
     /**
      * Metodo <I>getSpeedX</I> de la clase <code>Pelota</code>.
      *
@@ -64,7 +64,7 @@ public class Pelota extends Base {
     public double getSpeedX() {
         return speedX;
     }
- 
+
     /**
      * Metodo <I>getSpeedX</I> de la clase <code>Pelota</code>.
      *
@@ -74,7 +74,7 @@ public class Pelota extends Base {
     public double getSpeedY() {
         return speedY;
     }
- 
+
     /**
      * Metodo <I>setSpeedX</I> de la clase <code>Pelota</code>, En este metodo
      * se modifica la velocidad en x del objeto pelota.
@@ -85,7 +85,7 @@ public class Pelota extends Base {
     public void setSpeedX(double cant) {
         speedX = cant;
     }
- 
+
     /**
      * Metodo <I>setSpeedY</I> de la clase <code>Pelota</code>, En este metodo
      * se modifica la velocidad en y del objeto pelota.

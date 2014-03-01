@@ -1,20 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @author Gustavo Ferrufino
  */
-
-package tiroparabolico;
+package tiroparabolico; //Paquete importado
 
 import javax.swing.JFrame;
 
-/**
- *
- * @author Ferrufino
- */
 public class TiroParabolico {
 
- /**
+    /**
+     * 
      * @param args the command line arguments
      */
     public static void main(String[] args) {
@@ -22,5 +17,5 @@ public class TiroParabolico {
         variable.setVisible(true); //Aparezca mi codigo en clase AppletExamen1
         variable.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    
+
 }

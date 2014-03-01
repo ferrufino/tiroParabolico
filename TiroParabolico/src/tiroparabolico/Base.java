@@ -5,17 +5,17 @@
  *@Matricula A00812572  && A01191581
  */
 package tiroparabolico;
- 
+
 import javax.swing.ImageIcon;
 import java.awt.Image;
 import java.awt.Rectangle;
- 
+
 public class Base {
- 
+
     private int posX;    //posicion en x.      
     private int posY;   //posicion en y.
     private ImageIcon icono;    //icono.
- 
+
     /**
      * Metodo <I>Base</I> constructor de la clase <code>Base</code>, En este
      * metodo se construye el objet.
@@ -31,9 +31,9 @@ public class Base {
         this.posX = posX;
         this.posY = posY;
         icono = new ImageIcon(image);
- 
+
     }
- 
+
     /**
      * Metodo <I>setPosX</I> de la clase <code>Base</code>, En este metodo se
      * construye el objeto.
@@ -44,7 +44,7 @@ public class Base {
     public void setPosX(int posX) {
         this.posX = posX;
     }
- 
+
     /**
      * Metodo <I>setPosy</I> de la clase <code>Base</code>, En este metodo se
      * construye el objeto.
@@ -55,7 +55,7 @@ public class Base {
     public void setPosY(int posY) {
         this.posY = posY;
     }
- 
+
     /**
      * Metodo <I>getPosX</I> de la clase <code>Base</code>.
      *
@@ -65,7 +65,7 @@ public class Base {
     public int getPosX() {
         return posX;
     }
- 
+
     /**
      * Metodo <I>getPosY</I> de la clase <code>Base</code>,
      *
@@ -75,7 +75,7 @@ public class Base {
     public int getPosY() {
         return posY;
     }
- 
+
     /**
      * Metodo <I>setImageIcon</I> de la clase <code>Base</code>, En este metodo
      * se modifica la imagen del objeto.
@@ -85,7 +85,7 @@ public class Base {
     public void setImageIcon(ImageIcon icono) {
         this.icono = icono;
     }
- 
+
     /**
      * Metodo <I>getImageIcon</I> de la clase <code>Base</code>, En este metodo
      * se
@@ -96,7 +96,7 @@ public class Base {
     public ImageIcon getImageIcon() {
         return icono;
     }
- 
+
     /**
      * Metodo <I>getAncho<I> metodo de acceso que regresa el ancho del icono
      *
@@ -106,7 +106,7 @@ public class Base {
     public int getAncho() {
         return icono.getIconWidth();
     }
- 
+
     /**
      * Metodo <I>getIconHeight<I> metodo de acceso que regresa la altura del
      * icono
@@ -117,7 +117,7 @@ public class Base {
     public int getAlto() {
         return icono.getIconHeight();
     }
- 
+
     /**
      * Metodo <I>getImagen</I> metodo de acceso que regresa la imagen del
      * objeto.
@@ -128,7 +128,7 @@ public class Base {
     public Image getImagenI() {
         return icono.getImage();
     }
- 
+
     /**
      * Metodo <I>getPerimetro</I> metodo de acceso que regresa el rectangulo del
      * objeto.
@@ -139,7 +139,7 @@ public class Base {
     public Rectangle getPerimetro() {
         return new Rectangle(getPosX(), getPosY(), getAncho() - 50, getAlto() - 50);
     }
- 
+
     /**
      * Metodo <I>intersecta2</I> metodo de acceso que regresa un valor booleano
      * si intersecta con otro objeto.
@@ -151,7 +151,7 @@ public class Base {
     public boolean intersecta2(Base obj) {
         return getPerimetro().intersects(obj.getPerimetro());
     }
- 
+
     /**
      * Metodo <I>intersecta2</I> metodo de acceso que regresa un valor booleano
      * si intersecta con ciertos puntos.
@@ -165,7 +165,7 @@ public class Base {
     public boolean intersectaPuntos(int posX, int posY) {
         return getPerimetro().contains(posX, posY);
     }
- 
+
     /**
      * Metodo <I>intersecta</I> metodo de acceso que regresa un valor booleano
      * si intersecta con cierto objeto.
@@ -178,5 +178,5 @@ public class Base {
         // return getPerimRec().intersects(obj.getPerimetro());
         return getPerimetro().intersects(obj.getPerimetro());
     }
- 
+
 }
