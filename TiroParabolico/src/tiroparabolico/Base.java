@@ -1,84 +1,104 @@
 /*
  *Class Base
  *
- *@Author Gustavo Ferrufino
- *@Matricula A00812572
+ *@Author Gustavo Ferrufino &&  Andrés Gutiérrez Castaño
+ *@Matricula A00812572  && A01191581
  */
 package tiroparabolico;
-
+ 
 import javax.swing.ImageIcon;
 import java.awt.Image;
 import java.awt.Rectangle;
-
+ 
 public class Base {
-
-    private int posX;    //posicion en x.       
-    private int posY;	//posicion en y.
+ 
+    private int posX;    //posicion en x.      
+    private int posY;   //posicion en y.
     private ImageIcon icono;    //icono.
-
+ 
+    /**
+     * Metodo <I>Base</I> constructor de la clase <code>Base</code>, En este
+     * metodo se construye el objet.
+     *
+     * @paramposX tipo de dato <code>Entero</code> es el valor utilizado para
+     * manejar la posicion en x.
+     * @paramposY tipo de dato <code>Entero</code> es el valor utilizado para
+     * manejar la posicion en y.
+     * @parageimage tipo de dato <code>Imagen</code> es la imagen utilizada para
+     * construir el objeto.
+     */
     public Base(int posX, int posY, Image image) {
         this.posX = posX;
         this.posY = posY;
         icono = new ImageIcon(image);
-
+ 
     }
-
-    /*
-     *Clase setPosX
-     *Sirve para definir la posX
-     * recibe de parametro un entero
+ 
+    /**
+     * Metodo <I>setPosX</I> de la clase <code>Base</code>, En este metodo se
+     * construye el objeto.
+     *
+     * @paramposX tipo de dato <code>Entero</code> es el valor utilizado para
+     * manejar la posicion en x.
      */
     public void setPosX(int posX) {
         this.posX = posX;
     }
-
-    /*
-     *Clase getPosx
-     *regresa la posicion en X
-     * 
-     */
-    public int getPosX() {
-        return posX;
-    }
-
-    /*
-     *Clase setPosY
-     *Sirve para definir la posicion en Y
-     * recibe de parametro un entero
+ 
+    /**
+     * Metodo <I>setPosy</I> de la clase <code>Base</code>, En este metodo se
+     * construye el objeto.
+     *
+     * @paramposX tipo de dato <code> Entero </code> es el valor utilizado para
+     * manejar la posicion en y.
      */
     public void setPosY(int posY) {
         this.posY = posY;
     }
-
-    /*
-     *Clase getPosY
-     *regresa la posicion en Y
-     * 
+ 
+    /**
+     * Metodo <I>getPosX</I> de la clase <code>Base</code>.
+     *
+     * @return regresa la posicion en x del objeto.
+     *
+     */
+    public int getPosX() {
+        return posX;
+    }
+ 
+    /**
+     * Metodo <I>getPosY</I> de la clase <code>Base</code>,
+     *
+     * @return regresa el valor de la posicion en y.
+     *
      */
     public int getPosY() {
         return posY;
     }
-
-    /*
-     *Clase getAncho
-     *regresa lo ancho de un objeto ImageIcon
-     *en este caso de la animacion creada. Malo/Bueno
+ 
+    /**
+     * Metodo <I>setImageIcon</I> de la clase <code>Base</code>, En este metodo
+     * se modifica la imagen del objeto.
+     *
+     * @paramsetImageIcon contiene la imagen para modificar.
      */
     public void setImageIcon(ImageIcon icono) {
         this.icono = icono;
     }
-
+ 
     /**
-     * Metodo de acceso que regresa el icono del objeto
+     * Metodo <I>getImageIcon</I> de la clase <code>Base</code>, En este metodo
+     * se
      *
-     * @return icono es el <code>icono</code> del objeto.
+     * @return regresa la imagen del objeto
+     *
      */
     public ImageIcon getImageIcon() {
         return icono;
     }
-
+ 
     /**
-     * Metodo de acceso que regresa el ancho del icono
+     * Metodo <I>getAncho<I> metodo de acceso que regresa el ancho del icono
      *
      * @return un objeto de la clase <code>ImageIcon</code> que es el ancho del
      * icono.
@@ -86,19 +106,21 @@ public class Base {
     public int getAncho() {
         return icono.getIconWidth();
     }
-
+ 
     /**
-     * Metodo de acceso que regresa el alto del icono
+     * Metodo <I>getIconHeight<I> metodo de acceso que regresa la altura del
+     * icono
      *
-     * @return un objeto de la clase <code>ImageIcon</code> que es el alto del
+     * @return un objeto de la clase <code>ImageIcon</code> que es la altura del
      * icono.
      */
     public int getAlto() {
         return icono.getIconHeight();
     }
-
+ 
     /**
-     * Metodo de acceso que regresa la imagen del icono
+     * Metodo <I>getImagen</I> metodo de acceso que regresa la imagen del
+     * objeto.
      *
      * @return un objeto de la clase <code>Image</code> que es la imagen del
      * icono.
@@ -106,55 +128,55 @@ public class Base {
     public Image getImagenI() {
         return icono.getImage();
     }
-
+ 
     /**
-     * Metodo de acceso que regresa un nuevo rectangulo
+     * Metodo <I>getPerimetro</I> metodo de acceso que regresa el rectangulo del
+     * objeto.
      *
      * @return un objeto de la clase <code>Rectangle</code> que es el perimetro
      * del rectangulo
      */
-    /*
-     *Clase getPerimetro
-     *regresa el perimetro de un objeto formado por 
-     *la altura, ancho, posX, posY
-     */
     public Rectangle getPerimetro() {
-        return new Rectangle(getPosX(), getPosY(), getAncho()-50, getAlto()-50);
+        return new Rectangle(getPosX(), getPosY(), getAncho() - 50, getAlto() - 50);
     }
-
-    /*
-     *Clase instersecta2
-     *recibe un objeto tipo base 
-     *regresa un boleano si intersecta dentro de un permetro definido
+ 
+    /**
+     * Metodo <I>intersecta2</I> metodo de acceso que regresa un valor booleano
+     * si intersecta con otro objeto.
+     *
+     * @paramobj tipo de dato <code>Base</code> objeto mandado para verificar si
+     * intersecta.
+     * @return un booleano que determina si los objetos se intersectan.
      */
     public boolean intersecta2(Base obj) {
         return getPerimetro().intersects(obj.getPerimetro());
     }
-
-    /*
-     *Clase instersectaPuntos
-     *recibe dos enteros
-     *regresa un boleano si intersecta dentro la coordenadas dadas como dato
-     *de entrada
+ 
+    /**
+     * Metodo <I>intersecta2</I> metodo de acceso que regresa un valor booleano
+     * si intersecta con ciertos puntos.
+     *
+     * @paramposX tipo de dato <code>Entero</code> objeto mandado para verificar
+     * si intersecta.
+     * @paramposY tipo de dato <code>Entero</code> objeto mandado para verificar
+     * si intersecta.
+     * @return un booleano que determina si los objetos se intersectan.
      */
     public boolean intersectaPuntos(int posX, int posY) {
         return getPerimetro().contains(posX, posY);
     }
-
-    /*
-     *Clase intersecta
-     *recibe onjeto malo
-     *Metodo que sirve para saber si un objeto malo
-     *Intersecta con un perimetro
+ 
+    /**
+     * Metodo <I>intersecta</I> metodo de acceso que regresa un valor booleano
+     * si intersecta con cierto objeto.
+     *
+     * @obj tipo de dato <code>Entero</code> objeto mandado para verificar si
+     * intersecta.
+     * @return un booleano que determina si los objetos se intersectan.
      */
     public boolean intersecta(Base obj) {
         // return getPerimRec().intersects(obj.getPerimetro());
         return getPerimetro().intersects(obj.getPerimetro());
     }
-    /*
-     *Clase updates
-     *recibe un long
-     *Actualiza la animacion
-     */
-
+ 
 }
